@@ -229,9 +229,13 @@ public class ImagePickerSheetController: UIViewController, UITableViewDataSource
             if (disableMultiSelect) {
                 selectedPhotoIndices = [indexPath.section]
                 
+                /*
                 var sectionsIndexSet:NSIndexSet = NSIndexSet(indexesInRange: NSRange(location: 0 , length: collectionView.numberOfSections()))
                 
                 collectionView.reloadSections(sectionsIndexSet)
+                */
+                
+                collectionView.reloadData()
                 
             } else {
                 selectedPhotoIndices.append(indexPath.section)
