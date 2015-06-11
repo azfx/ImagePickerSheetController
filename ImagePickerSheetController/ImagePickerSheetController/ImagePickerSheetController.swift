@@ -63,6 +63,9 @@ public class ImagePickerSheetController: UIViewController, UITableViewDataSource
     
     private let imageManager = PHCachingImageManager()
     
+    /* Enable/Disable multi selection of photos */
+    public var disableMultiSelect:Bool = false
+    
     // MARK: - Initialization
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -222,7 +225,17 @@ public class ImagePickerSheetController: UIViewController, UITableViewDataSource
         let selected = contains(selectedPhotoIndices, indexPath.section)
         
         if !selected {
-            selectedPhotoIndices.append(indexPath.section)
+        
+            if (disableMultiSelect) {
+                selectedPhotoIndices = [indexPath.section]
+                
+                var sectionsIndexSet:NSIndexSet = NSIndexSet(indexesInRange: NSRange(location: 0 , length: collectionView.numberOfSections()))
+                
+                collectionView.reloadSections(sectionsIndexSet)
+                
+            } else {
+                selectedPhotoIndices.append(indexPath.section)
+            }
             
             if !enlargedPreviews {
                 enlargedPreviews = true
